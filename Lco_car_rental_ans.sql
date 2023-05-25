@@ -51,8 +51,7 @@ RENTAL.END_DATE = (SELECT END_DATE + INTERVAL 4 DAY)
 WHERE CUSTOMER.driver_license_number="W045654959";
 
 /* Q4) Fetch all rental details with their equipment type.*/
-SELECT * FROM RENTAL R
-INNER JOIN equipment_type E ON R.ID=E.ID;
+
 
 /* Q5) Fetch all details of vehicles.*/
 
