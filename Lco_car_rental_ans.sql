@@ -52,6 +52,16 @@ WHERE CUSTOMER.driver_license_number="W045654959";
 
 /* Q4) Fetch all rental details with their equipment type.*/
 
+SELECT concat(customer.first_name," ",customer.last_name) as Full_Name,customer.driver_license_number,
+rental.start_date,rental.end_date,
+concat(location.street_address," ", location.city," ",location.state," ",location.zipcode) as pickup_location,
+concat(location_drop.street_address," ", location_drop.city," ",location_drop.state," ",location_drop.zipcode) as drop_off_location,
+equipment.name as equipment_type
+from rental 
+inner join customer on customer.id=rental.id
+inner join location on rental.pickup_location_id=location.id
+inner join location location_drop on rental.drop_off_location_id=location_drop.id
+inner join equipment on customer.id=equipment.id;
 
 /* Q5) Fetch all details of vehicles.*/
 
