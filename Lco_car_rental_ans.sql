@@ -65,18 +65,44 @@ inner join equipment on customer.id=equipment.id;
 
 /* Q5) Fetch all details of vehicles.*/
 
+select v.id,v.brand,v.model,v.model_year,v.mileage,v.color,
+vt.name as vehicle_type,vt.rental_value,
+concat(l.street_address," ",l.city," ",l.state," ",l.zipcode) as Current_Location
+from vehicle v
+left join vehicle_type vt on v.vehicle_type_id=vt.id
+inner join location l on l.id=v.id;
+
 /* Q6) Get driving license of the customer with most rental insurances.*/
+
+select count(rental_has_insurance.rental_id) as Number_of_insurance ,customer.driver_license_number
+from rental_has_insurance 
+inner join customer on rental_has_insurance.rental_id=customer.id
+group by rental_has_insurance.rental_id 
+order by count(rental_has_insurance.rental_id) desc limit 1;
 
 /* Q7) Insert a new equipment type with following details.
 Name : Mini TV
 Rental Value : 8.99 */
+
+insert into equipment_type(name,rental_value)
+values("Mini TV",8.99);
+
 
 /* Q8) Insert a new equipment with following details:
 Name : Garmin Mini TV
 Equipment type : Mini TV
 Current Location zip code : 60638 */
 
+nsert into equipment( name,equipment_type_id,current_location_id)
+values("Garmin mini Tv",
+(select id from equipment_type where name="Mini tv"),
+(Select id from location where zipcode=60638));
+
 /* Q9) Fetch rental invoice for customer (email: smacias3@amazonaws.com). */
+
+select *
+from rental_invoice 
+where id=(select id from customer where email="smacias3@amazonaws.com");
 
 /* Q10) Insert the invoice for customer (driving license: ) with following details:-
 Car Rent : 785.4
