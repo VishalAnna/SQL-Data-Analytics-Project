@@ -104,7 +104,7 @@ select *
 from rental_invoice 
 where id=(select id from customer where email="smacias3@amazonaws.com");
 
-/* Q10) Insert the invoice for customer (driving license: ) with following details:-
+/* Q10) Insert the invoice for customer (driving license:"K59042656E" ) with following details:-
 Car Rent : 785.4
 Equipment Rent : 114.65
 Insurance Cost : 688.2
@@ -113,13 +113,34 @@ Total: 1614.45
 Discount : 213.25
 Net Amount: 1401.2 */
 
-/* Q11) Which rental has the most number of equipment.
+insert into rental_invoice(car_rent,equipment_rent_total,insurance_cost_total,
+tax_surcharges_and_fees,total_amount_payable,discount_amount,net_amount_payable,rental_id)
+values(785.4,114.65,688.2,26.2,1614.45,213.25,1401.2,
+(select id from customer where driver_license_number="K59042656E"));
 
-/* Q12) Get driving license of a customer with least number of rental licenses.
+/* Q11) Which rental has the most number of equipment.*/
+
+select rental_id,count(rental_id) as No_of_equipment
+from rental_has_equipment_type 
+group by rental_id
+order by count(rental_id) desc limit 1;
+
+/* Q12) Get driving license of a customer with least number of rental licenses.*/
+
+SELECT customer.driver_license_number, COUNT(rental_has_insurance.rental_id) AS number_of_insurance
+FROM customer LEFT JOIN rental ON rental.customer_id = customer.id
+LEFT JOIN rental_has_insurance ON rental_has_insurance.rental_id = rental.id
+GROUP BY rental_has_insurance.rental_id ORDER BY COUNT(rental_has_insurance.rental_id) asc LIMIT 1;
 
 /* Q13) Insert new location with following details.
 Street address : 1460  Thomas Street
-City : Burr Ridge , State : IL, Zip - 61257
+City : Burr Ridge ,
+ State : IL, 
+ Zip - 61257*/
+
+insert into location(street_address,city,state,zipcode)
+ values("1460 Thomas Street","Burr Ridge","IL",61257);
+
 
 /* Q14) Add the new vehicle with following details:-
 Brand: Tata 
@@ -128,21 +149,51 @@ Model Year : 2020
 Mileage: 17000
 Color: Blue
 Vehicle Type: Economy SUV 
-Current Location Zip: 20011 
+Current Location Zip: 20011 */
 
-/* Q15) Insert new vehicle type Hatchback and rental value: 33.88.
+insert into vehicle(brand,model,model_year,mileage,color,vehicle_type_id,current_location_id)
+values("Tata","Nexon",2020,17000,"Blue",(select id from vehicle_type where name="Economy SUV"),
+(Select id from location where zipcode="20011"));
 
-/* Q16) Add new fuel option Pre-paid (refunded).
+/* Q15) Insert new vehicle type Hatchback and rental value: 33.88.*/
 
-Q17) Assign the insurance : Cover My Belongings (PEP), Cover The Car (LDW) to the rental started on 25-08-2020 (created in Q2) by customer (Driving License:K59042656E).
+insert into vehicle_type (name,rental_value)
+values("Hatchback",33.88);
 
-/* Q18) Remove equipment_type :Satellite Radio from rental started on 2018-07-14 and ended on 2018-07-23.
+/* Q16) Add new fuel option Pre-paid (refunded).*/
 
-/* Q19) Update phone to 510-624-4188 of customer (Driving License: K59042656E).
+insert into fuel_option(name,description)
+values("Pre-paid(refunded)",
+"Customer buy a tank of fuel at pick-up and get refunded the amount customer don’t use.");
 
-/* Q20) Increase the insurance cost of Cover The Car (LDW) by 5.65.
+/* Q17) Assign the insurance : Cover My Belongings (PEP), Cover The Car (LDW) 
+to the rental started on 25-08-2020 (created in Q2) 
+by customer (Driving License:K59042656E).*/
 
-/* Q21) Increase the rental value of all equipment types by 11.25.
+insert into rental_has_insurance(rental_id,insurance_id)
+values((select id from rental where start_date ='2020-08-25'),
+(select id from insurance where name= 'Cover My Belongings (PEP)')),
+((select id from rental where start_date ='2020-08-25'),
+(select id from insurance where name= 'Cover The Car (LDW)'));
+
+/* Q18) Remove equipment_type :Satellite Radio from rental started on 2018-07-14 and ended on 2018-07-23.*/
+
+delete from rental_has_equipment_type
+where equipment_type_id=(select id from equipment_type where name='Satellite Radio')
+ and rental_id=(select id from rental where start_date ='2018-07-14' and end_date='2018-07-23');
+
+/* Q19) Update phone to 510-624-4188 of customer (Driving License: K59042656E).*/
+
+update customer 
+set phone='510-624-4188' where driver_license_number='K59042656E';
+
+/* Q20) Increase the insurance cost of Cover The Car (LDW) by 5.65.*/
+update insurance
+set cost= (select cost + 5.65) where name='Cover The Car (LDW)';
+
+/* Q21) Increase the rental value of all equipment types by 11.25.*/
+update equipment_type
+set rental_value=(select rental_value + 11.25);
 
 /* Q22) Increase the  cost of all rental insurances except Cover The Car (LDW) by twice the current cost.
 
