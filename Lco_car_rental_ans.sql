@@ -195,28 +195,60 @@ set cost= (select cost + 5.65) where name='Cover The Car (LDW)';
 update equipment_type
 set rental_value=(select rental_value + 11.25);
 
-/* Q22) Increase the  cost of all rental insurances except Cover The Car (LDW) by twice the current cost.
+/* Q22) Increase the  cost of all rental insurances except Cover The Car (LDW) by twice the current cost.*/
 
-/* Q23) Fetch the maximum net amount of invoice generated.
+update insurance
+set cost=(select cost * 2) where insurance.name!="Cover The Car (LDW)";
 
-/* Q24) Update the dob of customer with driving license V435899293 to 1977-06-22.
+/* Q23) Fetch the maximum net amount of invoice generated.*/
 
-Q25)  Insert new location with following details.
+SELECT MAX(net_amount_payable)as maximum_net_amount FROM `rental_invoice`;
+
+/* Q24) Update the dob of customer with driving license V435899293 to 1977-06-22.*/
+
+update customer
+set dob='1977-06-22' where driver_license_number="V435899293";
+
+/*Q25)  Insert new location with following details.
 Street address : 468  Jett Lane
-City : Gardena , State : CA, Zip - 90248
+City : Gardena , State : CA, Zip - 90248*/
 
-Q26) The new customer (Driving license: W045654959) wants to rent a car from 2020-09-15 to 2020-10-02. More details are as follows: 
+insert into location(street_address,city,state,zipcode)
+values("468  Jett Lane","gardena","CA",90248);
+
+
+/*Q26) The new customer (Driving license: W045654959) 
+wants to rent a car from 2020-09-15 to 2020-10-02. More details are as follows: 
 
 Vehicle Type : Hatchback
 Fuel Option : Pre-paid (refunded)
 Pick Up location:  468  Jett Lane , Gardena , CA, zip- 90248
-Drop Location: 5911 Blair Rd NW, Washington, DC, zip - 20011
+Drop Location: 5911 Blair Rd NW, Washington, DC, zip - 20011*/
 
-Q27) Replace the driving license of the customer (Driving License: G055017319) with new one K16046265.
+INSERT INTO `rental`(`start_date`, `end_date`, `customer_id`, `vehicle_type_id`,
+ `fuel_option_id`, `pickup_location_id`, `drop_off_location_id`) 
+VALUES ("2020-09-15", "2020-10-02", (SELECT customer.id FROM customer WHERE customer.driver_license_number="W045654959"), 
+(SELECT vehicle_type.id FROM vehicle_type WHERE vehicle_type.name="Hatchback"), 
+(SELECT fuel_option.id FROM fuel_option WHERE fuel_option.name="Pre-paid(refunded)"), 
+(SELECT location.id FROM location WHERE location.zipcode=90248),
+(SELECT location.id FROM location WHERE location.zipcode=20011));
 
-Q28) Calculated the total sum of all insurance costs of all rentals.
+/*Q27) Replace the driving license of the customer (Driving License: G055017319) with new one K16046265.*/
 
-Q29) How much discount we gave to customers in total in the rental invoice?
+update customer 
+set driver_license_number="K16046265" where driver_license_number="G055017319";
 
-Q30) The Nissan Versa has been repainted to black. Update the record.
+/*Q28) Calculated the total sum of all insurance costs of all rentals.*/
 
+SELECT SUM(insurance.cost) as Total_cost
+FROM `rental_has_insurance` 
+INNER JOIN insurance ON insurance.id= rental_has_insurance.insurance_id;
+
+/*Q29) How much discount we gave to customers in total in the rental invoice?*/
+
+SELECT SUM(discount_amount) as total_discount FROM rental_invoice;
+
+/*Q30) The Nissan Versa has been repainted to black. Update the record.*/
+
+update vehicle 
+set color ="Black" where brand="Nissan" and model="Versa";
