@@ -1,6 +1,5 @@
 # SQL-Data-Analytics-Project
-## MySql Code is Used for Most of the answers.
-
+MySql Code is Used for Most of the answers.
 ------------------Lco_car_rental---------------------------------
 Visit our website at https://web.learncodeonline.in for more exciting courses.
 Course: MySQL 
