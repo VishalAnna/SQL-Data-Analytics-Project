@@ -1,7 +1,7 @@
 
 /*Visit our website at https://web.learncodeonline.in for more exciting courses.
 ________________________________________
-Course: MySQL
+Course: MySQL Basic To advanced 
 Difficulty: Intense
 Instruction: Import the given lco_car_rentals.sql file in phpmyadmin and then 
 answer the following questions with mySQL queries. */
