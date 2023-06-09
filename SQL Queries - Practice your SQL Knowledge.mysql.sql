@@ -52,6 +52,11 @@ ORDER BY o.OrderID;
 
 /*5. Select products that no one bought*/
 
+select p.ProductName,o.orderid
+from products p
+left join order_details o on p.ProductID=o.ProductID
+where o.OrderID is  null; 
+
 /*6. Select customer together with the products that he bought*/
 
 
