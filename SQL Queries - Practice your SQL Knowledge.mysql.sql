@@ -17,7 +17,7 @@ Products(ProductID, ProductName, SupplierID, CategoryID, Unit, Price)
 Shippers (ShipperID, ShipperName, Phone)
 */
 
-/**** Advanced Level *****/
+ Advanced Level 
 /*1. Select customer name together with each order(orderID) the customer made*/
 
 select c.CustomerName,ors.OrderID
