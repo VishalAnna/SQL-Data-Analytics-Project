@@ -196,15 +196,15 @@ where dep.name not like "Support"
 order by com.name;
 
 /*
-26. Query employee name together with the department name that they are not working in
+26. Query the employee name together with the department name that they are not working in
 */
 select emp.name,dep.name
-from department as dep ,employee as emp
+from the department as dep , employee as emp
 where dep.id <> emp.id;
 
 
 /*
-27. Query company name together with other companies names
+27. Query the company name together with other companies' names
 LIKE:
 GOOGLE Apple
 GOOGLE IBM
@@ -218,17 +218,17 @@ order by com1.name,com2.name;
 
 
 /*
-28. Query employee names with salary smaller than 80 000 without using NOT and <
+28. Query employee names with a salary smaller than 80 000 without using NOT and <
 NOTE: for POSTGRESQL only. Mysql doesn't support except
 */
 
 
 /*
-29.Query names of every company and change the name of column to 'Company'
+29. Query names of every company and change the name of the column to 'Company'
 */
-select `name` as Company from company ;
+select `name` as Company from the company ;
 /*
-30. Query all employees that work in same department as Peter
+30. Query all employees that work in the same department as Peter
 */
 SELECT * FROM employee
 WHERE department IN(
