@@ -40,8 +40,8 @@ VALUES('2020-08-25 ','2020-08-30',
 SELECT * FROM RENTAL;
 
 /* Q3) The customer with the driving license W045654959 
-changed his/her drop off location to 
-1001 Henderson St,Fort Worth, TX, zip - 76102  and wants to extend the rental upto 4 more days. 
+changed his/her drop-off location to 
+1001 Henderson St, Fort Worth, TX, zip - 76102,  and wants to extend the rental upto 4 more days. 
 Update the record.*/
 
 UPDATE RENTAL 
@@ -72,7 +72,7 @@ from vehicle v
 left join vehicle_type vt on v.vehicle_type_id=vt.id
 inner join location l on l.id=v.id;
 
-/* Q6) Get driving license of the customer with most rental insurances.*/
+/* Q6) Get a driving license of the customer with most rental insurances.*/
 
 select count(rental_has_insurance.rental_id) as Number_of_insurance ,customer.driver_license_number
 from rental_has_insurance 
@@ -80,8 +80,8 @@ inner join customer on rental_has_insurance.rental_id=customer.id
 group by rental_has_insurance.rental_id 
 order by count(rental_has_insurance.rental_id) desc limit 1;
 
-/* Q7) Insert a new equipment type with following details.
-Name : Mini TV
+/* Q7) Insert a new equipment type with the following details.
+Name: Mini TV
 Rental Value : 8.99 */
 
 insert into equipment_type(name,rental_value)
@@ -89,7 +89,7 @@ values("Mini TV",8.99);
 
 
 /* Q8) Insert a new equipment with following details:
-Name : Garmin Mini TV
+Name: Garmin Mini TV
 Equipment type : Mini TV
 Current Location zip code : 60638 */
 
