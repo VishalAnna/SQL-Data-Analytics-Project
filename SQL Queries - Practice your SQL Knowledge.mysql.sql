@@ -59,6 +59,12 @@ where o.OrderID is  null;
 
 /*6. Select customer together with the products that he bought*/
 
+SELECT c.CustomerID, c.CustomerName, p.ProductName
+FROM customers c
+JOIN orders o ON o.CustomerID = c.CustomerID
+JOIN order_details od ON od.OrderID = o.OrderID
+JOIN products p ON p.ProductID = od.ProductID
+ORDER BY c.CustomerID, p.ProductName ASC;
 
 
 /*7. Select product names together with the name of corresponding category*/
