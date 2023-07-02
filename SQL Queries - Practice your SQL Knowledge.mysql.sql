@@ -68,6 +68,10 @@ ORDER BY c.CustomerID, p.ProductName ASC;
 
 
 /*7. Select product names together with the name of corresponding category*/
+SELECT p.ProductID, p.ProductName, c.CategoryName
+FROM products p
+JOIN categories c
+ON p.CategoryID = c.CategoryID;
 
 
 /*8. Select orders together with the name of the shipping company*/
