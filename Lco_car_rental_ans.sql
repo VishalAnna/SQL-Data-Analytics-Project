@@ -23,6 +23,7 @@ Fuel Option : Market
 Pick Up location: 5150 W 55th St , Chicago, IL, zip- 60638
 Drop Location: 9217 Airport Blvd, Los Angeles, CA, zip - 90045 */
 
+
 INSERT INTO RENTAL(START_DATE,
 END_DATE,
 customer_id ,
