@@ -38,12 +38,15 @@ VALUES('2020-08-25 ','2020-08-30',
 (SELECT P.ID FROM LOCATION P WHERE P.ZIPCODE="60638"),
 (SELECT D.ID FROM LOCATION D WHERE D.ZIPCODE="90045")) ;
 
+
 SELECT * FROM RENTAL;
+
 
 /* Q3) The customer with the driving license W045654959 
 changed his/her drop-off location to 
 1001 Henderson St, Fort Worth, TX, zip - 76102,  and wants to extend the rental upto 4 more days. 
 Update the record.*/
+
 
 UPDATE RENTAL 
 INNER JOIN CUSTOMER ON CUSTOMER.ID=RENTAL.ID 
